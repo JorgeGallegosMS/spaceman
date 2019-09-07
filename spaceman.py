@@ -79,11 +79,18 @@ def spaceman(secret_word):
     Args:
       secret_word (string): the secret word to guess.
     '''
-
+    letters_guessed = []
+    guesses_left = 7
+    game_over = is_word_guessed(secret_word, letters_guessed)
 
     #TODO: show the player information about the game according to the project spec
 
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
+    while not game_over and guesses_left != 0:
+        guess = user_input("What letter would you like to use?")
+        if len(guess) != 1:
+            print("Error: More than one letter was detected")
+            continue
 
     #TODO: Check if the guessed letter is in the secret or not and give the player feedback
 
@@ -98,4 +105,4 @@ def spaceman(secret_word):
 
 #These function calls that will start the game
 secret_word = load_word()
-spaceman(load_word())
+spaceman(secret_word)
