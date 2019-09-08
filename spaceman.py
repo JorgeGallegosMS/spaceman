@@ -83,6 +83,8 @@ def spaceman(secret_word):
     guesses_left = 7
     game_over = False
 
+
+
     #TODO: show the player information about the game according to the project spec
 
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
@@ -102,6 +104,7 @@ def spaceman(secret_word):
             print(letters_guessed)
         elif guess in letters_guessed:
             print("You already guessed that letter")
+            print(f" Attempts left: {guesses_left} ")
             continue
         else:
             print("Your letter was not found in the word")
@@ -112,10 +115,29 @@ def spaceman(secret_word):
         print(get_guessed_word(secret_word, letters_guessed))
 
     #TODO: check if the game has been won or lost
-        
+        word_is_guessed = is_word_guessed(secret_word, letters_guessed)
 
-
-
+        if word_is_guessed:
+            print("You guessed the word. You win!")
+            play_again = user_input("Would you like to play again? [y/n]: ")
+            if play_again.lower() == 'y':
+                secret_word = load_word()
+                letters_guessed = []
+                guesses_left = 7
+                continue
+            else:
+                game_over = True
+        elif guesses_left == 0:
+            print("You have run out of attempts, you lose!")
+            print(f"The word was {secret_word}")
+            play_again = user_input("Would you like to play again? [y/n]: ")
+            if play_again.lower() == 'y':
+                secret_word = load_word()
+                letters_guessed = []
+                guesses_left = 7
+                continue
+            else:
+                game_over = True
 
 
 
