@@ -73,6 +73,22 @@ def user_input(prompt):
     user_input = input(prompt)
     return user_input
 
+def reset():
+    secret_word = load_word()
+    letters_guessed = []
+    guesses_left = len(secret_word)
+    num_letters = f"\nThe word I'm thinking of has {len(secret_word)} letters in it\n"
+    print(num_letters)
+
+    return secret_word,letters_guessed,guesses_left
+
+def play_again():
+    play_again = user_input("Would you like to play again? [y/n]: ").lower()
+    while play_again != 'y' and play_again != 'n':
+        print("\nYou need to use 'y' or 'n'\n")
+        play_again = user_input("Would you like to play again? [y/n]: ").lower()
+    return play_again
+
 def spaceman(secret_word):
     '''
     A function that controls the game of spaceman. Will start spaceman in the command line.
@@ -87,13 +103,13 @@ def spaceman(secret_word):
 
 
     # show the player information about the game according to the project spec
-    print("Welcome to Spaceman, a word guessing game")
-    print("You must guess one letter at a time")
-    print(f"You have {guesses_left} attempts to figure out the word")
+    print("\nWelcome to Spaceman, a word guessing game.\n")
+    print("You must guess one letter at a time.\n")
+    print(f"You have {guesses_left} attempts to figure out the word, good luck!\n")
     print(num_letters)
     # Ask the player to guess one letter per round and check that it is only one letter
     while not game_over and guesses_left != 0:
-        attempts_left = f"\nAttempts left: {guesses_left}\n"
+        attempts_left = f"Attempts left: {guesses_left}\n"
         print(attempts_left)
         letters = ", ".join(letters_guessed)
         guessed = f"Letters guessed: {letters}\n"
@@ -136,25 +152,20 @@ def spaceman(secret_word):
         word_is_guessed = is_word_guessed(secret_word, letters_guessed)
 
         if word_is_guessed:
-            print("You guessed the word. You win!\n")
-            play_again = user_input("Would you like to play again? [y/n]: ")
-            if play_again.lower() == 'y':
-                secret_word = load_word()
-                letters_guessed = []
-                guesses_left = len(secret_word)
-                print(num_letters)
+            print(f"You guessed it! The word was {secret_word}. You win!\n")
+            again = play_again()
+            if play_again == 'y':
+                secret_word,letters_guessed, guesses_left = reset()
                 continue
             else:
                 game_over = True
+
         elif guesses_left == 0:
             print("You have run out of attempts, you lose!\n")
             print(f"The word was {secret_word}")
-            play_again = user_input("Would you like to play again? [y/n]: ")
-            if play_again.lower() == 'y':
-                secret_word = load_word()
-                letters_guessed = []
-                guesses_left = len(secret_word)
-                print(num_letters)
+            again = play_again()
+            if again == 'y':
+                secret_word,letters_guessed, guesses_left = reset()
                 continue
             else:
                 game_over = True
