@@ -175,3 +175,8 @@ def spaceman(secret_word):
 #These function calls that will start the game
 secret_word = load_word()
 spaceman(secret_word)
+
+
+# All the code is readable and seamless to follow. Only one issue I can think of is making sure your code follows DRY principles.
+# 'Don't Repeat Yourself'. If you look at lines (140-145) and lines (152-157) they are identical can hence don't need to be repeated 
+# You might want to create a function for that.
